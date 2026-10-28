@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Dashboard | FixIt</title>
+    <meta name="description" content="Review and manage campus complaints in FixIt.">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <header class="header">
+        <a href="/" class="logo" style="text-decoration: none;">✦ FixIt</a>
+
+        <nav class="nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/report">Report Issue</a>
+            <a href="/my-issues">My Issues</a>
+            <a href="/staff-dashboard" aria-current="page">Staff Dashboard</a>
+            <form action="{{ url_for('staff_logout') }}" method="POST" style="display: inline;">
+    <button type="submit" class="btn">Logout</button>
+</form>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <p style="color: #2563eb; font-weight: 700; margin-bottom: 12px;">
+                ✦ ADMINISTRATION
+            </p>
+
+            <h1>Staff Dashboard</h1>
+
+            <p>
+                Review campus complaints, monitor their status,
+                and open individual issues to manage progress.
+            </p>
+        </section>
+
+        <section style="margin-top: 34px;">
+            <div style="margin-bottom: 20px;">
+                <h2 style="font-size: 24px; color: #172033;">
+                    Complaint Overview
+                </h2>
+
+                <p style="color: #64748b; margin-top: 5px;">
+                    A summary of all complaints currently available in the system.
+                </p>
+            </div>
+
+            <div class="features">
+
+                <div class="feature-card">
+                    <p style="font-size: 13px; color: #64748b; font-weight: 700;">
+                        📋 TOTAL ISSUES
+                    </p>
+                    <h2 style="font-size: 34px; color: #172033; margin-top: 8px;">
+                        {{ complaints|length }}
+                    </h2>
+                    <p style="color: #64748b; margin-top: 5px;">
+                        All submitted complaints
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <p style="font-size: 13px; color: #64748b; font-weight: 700;">
+                        🟦 REPORTED
+                    </p>
+                    <h2 style="font-size: 34px; color: #1d4ed8; margin-top: 8px;">
+                        {{ complaints|selectattr('status', 'equalto', 'Reported')|list|length }}
+                    </h2>
+                    <p style="color: #64748b; margin-top: 5px;">
+                        Awaiting action
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <p style="font-size: 13px; color: #64748b; font-weight: 700;">
+                        🟠 IN PROGRESS
+                    </p>
+                    <h2 style="font-size: 34px; color: #b45309; margin-top: 8px;">
+                        {{ complaints|selectattr('status', 'equalto', 'In Progress')|list|length }}
+                    </h2>
+                    <p style="color: #64748b; margin-top: 5px;">
+                        Being addressed
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <p style="font-size: 13px; color: #64748b; font-weight: 700;">
+                        🟢 RESOLVED
+                    </p>
+                    <h2 style="font-size: 34px; color: #15803d; margin-top: 8px;">
+                        {{ complaints|selectattr('status', 'equalto', 'Resolved')|list|length }}
+                    </h2>
+                    <p style="color: #64748b; margin-top: 5px;">
+                        Resolution recorded
+                    </p>
+                </div>
+
+            </div>
+        
+        </section>
+
+        <!-- Complaint Analytics -->
+        {% set total = complaints|length %}
+        {% set reported = complaints|selectattr('status', 'equalto', 'Reported')|list|length %}
+        {% set progress = complaints|selectattr('status', 'equalto', 'In Progress')|list|length %}
+        {% set resolved = complaints|selectattr('status', 'equalto', 'Resolved')|list|length %}
+        {% set closed = complaints|selectattr('status', 'equalto', 'Closed')|list|length %}
+
+        <section class="analytics-panel" style="margin-top: 28px; padding: 28px; background: linear-gradient(135deg, #ffffff, #f5f8ff); border: 1px solid #e3eaf6; border-radius: 22px; box-shadow: 0 12px 35px rgba(28, 50, 90, 0.07);">
+            <div style="margin-bottom: 24px;">
+                <p style="font-size: 12px; font-weight: 800; letter-spacing: 1.5px; color: #4f46e5; margin-bottom: 8px;">
+                    LIVE INSIGHTS
+                </p>
+                <h2 style="font-size: 24px; color: #172033;">Complaint Analytics</h2>
+                <p style="color: #64748b; margin-top: 6px;">
+                    A visual breakdown of current complaint statuses.
+                </p>
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-around; gap: 32px; flex-wrap: wrap;">
+                
+<div style="width: 220px; height: 220px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#2563eb 0% 25%, #f59e0b 25% 50%, #16a34a 50% 75%, #64748b 75% 100%);">
+
+                    <div style="width: 145px; height: 145px; background: white; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: inset 0 0 0 1px #edf0f6;">
+                        
+<strong style="font-size: 38px; line-height: 1.1; color: #172033;">{{ total }}</strong>
+<span style="font-size: 12px; color: #64748b; font-weight: 700;">TOTAL ISSUES</span>
+<div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #e5eaf2; text-align: center;">
+    <strong style="font-size: 18px; color: #15803d;">{{ ((resolved / total * 100)|round|int) if total else 0 }}%</strong>
+    <p style="font-size: 10px; color: #64748b;">RESOLVED</p>
+</div>
+
+                        <span style="font-size: 12px; color: #64748b; font-weight: 700;">TOTAL ISSUES</span>
+                    </div>
+                </div>
+
+                <div style="flex: 1; min-width: 220px; max-width: 360px; display: flex; flex-direction: column; gap: 18px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 13px; height: 13px; border-radius: 4px; background: #2563eb; flex-shrink: 0;"></span>
+                        <span style="flex: 1; color: #475569;">Reported</span>
+                        <strong style="color: #172033;">{{ reported }}</strong>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 13px; height: 13px; border-radius: 4px; background: #f59e0b; flex-shrink: 0;"></span>
+                        <span style="flex: 1; color: #475569;">In Progress</span>
+                        <strong style="color: #172033;">{{ progress }}</strong>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 13px; height: 13px; border-radius: 4px; background: #16a34a; flex-shrink: 0;"></span>
+                        <span style="flex: 1; color: #475569;">Resolved</span>
+                        <strong style="color: #172033;">{{ resolved }}</strong>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <span style="width: 13px; height: 13px; border-radius: 4px; background: #64748b; flex-shrink: 0;"></span>
+                        <span style="flex: 1; color: #475569;">Closed</span>
+                        <strong style="color: #172033;">{{ closed }}</strong>
+                    </div>
+                    <p style="font-size: 12px; color: #94a3b8; border-top: 1px solid #e5eaf2; padding-top: 12px;">
+                        Counts update when the dashboard reloads.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section style="margin-top: 38px;">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 24px; color: #172033;">
+                        All Complaints
+                    </h2>
+                    <p style="color: #64748b; margin-top: 5px;">
+                        Newest complaints appear first.
+                    </p>
+                </div>
+
+                <span style="background: #e7efff; color: #1d4ed8; padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 700;">
+                    {{ complaints|length }} total
+                </span>
+            </div>
+
+<div style="margin-bottom: 20px;">
+    <label for="statusFilter" style="font-weight: 600;">
+        Filter complaints by status
+    </label>
+
+    <select id="statusFilter" style="max-width: 320px;">
+        <option value="all">All statuses</option>
+        <option value="Reported">🔵 Reported</option>
+        <option value="In Progress">🟠 In Progress</option>
+        <option value="Resolved">🟢 Resolved</option>
+        <option value="Closed">⚫ Closed</option>
+    </select>
+
+    <p id="filterMessage"
+       style="color: #64748b; font-size: 13px; margin-top: 8px;"
+       aria-live="polite"></p>
+</div>
+
+            {% if complaints %}
+
+                <div class="features">
+                    {% for complaint in complaints %}
+
+                        <article class="feature-card complaint-card"
+         data-status="{{ complaint.status }}"
+         style="display: flex; flex-direction: column; gap: 14px;">
+
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
+                                <div>
+                                    <p style="font-size: 12px; color: #64748b; font-weight: 700; letter-spacing: .5px;">
+                                        ISSUE #{{ complaint.id }}
+                                    </p>
+
+                                    <h3 style="margin-top: 5px;">
+                                        {{ complaint.category }}
+                                    </h3>
+                                </div>
+
+                                <span class="status-badge status-{{ complaint.status|lower|replace(' ', '-') }}"
+                                      style="margin-left: 0;">
+                                    {{ complaint.status }}
+                                </span>
+                            </div>
+
+                            <div style="background: #f8faff; padding: 14px; border-radius: 12px;">
+                                <p style="font-size: 12px; color: #64748b; margin-bottom: 5px;">
+                                    📍 LOCATION
+                                </p>
+                                <p style="font-weight: 600; overflow-wrap: anywhere;">
+                                    {{ complaint.location }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p style="font-size: 12px; color: #64748b; margin-bottom: 5px;">
+                                    DESCRIPTION
+                                </p>
+                                <p style="color: #475569; line-height: 1.7; overflow-wrap: anywhere;">
+                                    {% if complaint.description|length > 140 %}
+                                        {{ complaint.description[:140] }}…
+                                    {% else %}
+                                        {{ complaint.description }}
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                            <div style="border-top: 1px solid #e5eaf2; padding-top: 14px; margin-top: auto;">
+                                <p style="font-size: 13px; color: #64748b; margin-bottom: 14px;">
+                                    🕒 Reported: {{ complaint.created_at }}
+                                </p>
+
+                                <a class="btn"
+                                   href="{{ url_for('issue_detail', issue_id=complaint.id) }}"
+                                   style="text-align: center; width: 100%;">
+                                    Manage Issue →
+                                </a>
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <section class="feature-card" style="text-align: center; padding: 48px 24px;">
+                    <div style="font-size: 42px; margin-bottom: 16px;">📋</div>
+
+                    <h2>No reported issues yet</h2>
+
+                    <p style="color: #64748b; margin: 12px 0 24px;">
+                        New campus complaints will appear here when submitted.
+                    </p>
+
+                    <a href="/report" class="btn">Report a Test Issue →</a>
+                </section>
+
+            {% endif %}
+        </section>
+    </main>
+
+    <footer style="text-align: center; color: #64748b; font-size: 13px; padding: 32px 0 10px;">
+        FixIt · Staff Complaint Management
+    </footer>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const filter = document.getElementById("statusFilter");
+    const cards = document.querySelectorAll(".complaint-card");
+    const message = document.getElementById("filterMessage");
+
+    function filterComplaints() {
+        let visible = 0;
+
+        cards.forEach(function (card) {
+            const matches =
+                filter.value === "all" ||
+                card.dataset.status === filter.value;
+
+            card.style.display = matches ? "flex" : "none";
+
+            if (matches) visible++;
+        });
+
+        message.textContent =
+            "Showing " + visible + " of " + cards.length + " complaints.";
+    }
+
+    filter.addEventListener("change", filterComplaints);
+    filterComplaints();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report an Issue | FixIt</title>
+    <meta name="description" content="Report a campus issue to FixIt and track its progress.">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+
+        <header class="header">
+            <a href="/" class="logo" style="text-decoration: none;">✦ FixIt</a>
+
+            <nav class="nav" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/report" aria-current="page">Report Issue</a>
+                <a href="/my-issues">My Issues</a>
+                <a href="/staff-dashboard">Staff Dashboard</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <p style="color: #2563eb; font-weight: 700; margin-bottom: 12px;">
+                    ✦ CAMPUS SUPPORT
+                </p>
+
+                <h1>Let's fix what's broken.</h1>
+
+                <p>
+                    Give us a few details about the problem.
+                    Clear information helps your campus team understand the issue.
+                </p>
+            </section>
+
+            <section class="feature-card" style="margin-top: 30px; padding: 32px;">
+                <div style="margin-bottom: 28px;">
+                    <h2>📝 Issue Details</h2>
+                    <p style="color: #64748b; margin-top: 6px;">
+                        Fields marked * are required.
+                    </p>
+                </div>
+
+                <form id="reportForm" method="POST" action="/report"
+                      enctype="multipart/form-data">
+
+                    <div style="margin-bottom: 24px;">
+                        <label for="category">Issue Category *</label>
+
+                        <select id="category" name="category" required>
+                            <option value="">Choose the type of issue</option>
+                            <option value="Electricity">⚡ Electricity</option>
+                            <option value="Water">💧 Water</option>
+                            <option value="AC">❄️ Air Conditioning</option>
+                            <option value="Internet">📶 Internet</option>
+                            <option value="Plumbing">🚰 Plumbing</option>
+                            <option value="Furniture">🪑 Furniture</option>
+                            <option value="Door / Window">🚪 Door / Window</option>
+                            <option value="Cleanliness">🧹 Cleanliness</option>
+                            <option value="Other">📌 Other</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label for="location">📍 Issue Location *</label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            name="location"
+                            placeholder="e.g. Block 32, Room 204"
+                            maxlength="200"
+                            required
+                        >
+
+                        <p style="color: #64748b; font-size: 13px; margin-top: 6px;">
+                            Include the block, floor, room, or nearby landmark.
+                        </p>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <label for="description">🗒️ Describe the Issue *</label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            rows="6"
+                            maxlength="3000"
+                            placeholder="What is the problem? Where exactly is it happening? Add any useful details..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 28px;">
+                        <label for="photo">📷 Attach a Photo (Optional)</label>
+
+                        <div style="margin-top: 8px; padding: 18px; border: 1px dashed #a8bce3; border-radius: 12px; background: #f8faff;">
+                            <input
+                                type="file"
+                                id="photo"
+                                name="photo"
+                                accept="image/*"
+                            >
+
+                            <p style="color: #64748b; font-size: 13px; margin-top: 8px;">
+                                A photo can help explain the problem more clearly.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                        <button class="btn" type="submit">
+                            Submit Issue →
+                        </button>
+
+                        <a href="/" style="text-decoration: none; color: #64748b; padding: 12px;">
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+            </section>
+
+            <p style="text-align: center; color: #64748b; font-size: 13px; margin-top: 24px;">
+                FixIt · Helping make campus life better, one issue at a time.
+            </p>
+        </main>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

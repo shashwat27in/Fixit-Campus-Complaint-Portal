@@ -1,0 +1,29 @@
+FIXIT PROJECT — CURRENT PROGRESS
+
+Stack:
+HTML + CSS + JavaScript + Python Flask + MySQL
+
+Completed:
+✓ VS Code setup
+✓ Python installed
+✓ Virtual environment created
+✓ Flask installed
+✓ Flask server working
+✓ FixIt homepage
+✓ Report Issue page
+✓ CSS design
+✓ JavaScript validation
+✓ Flask POST route
+✓ Form connected to Flask
+✓ MySQL 8.0.46 installed
+✓ MySQL Workbench installed/configured
+
+CURRENT POINT:
+MySQL is installed and configured.
+Next: Create the FixIt database and connect Flask to MySQL.
+
+PROJECT LOCATION:
+C:\Users\shashwat\OneDrive\Desktop\fixit
+
+IMPORTANT:
+Continue step-by-step, one action at a time.

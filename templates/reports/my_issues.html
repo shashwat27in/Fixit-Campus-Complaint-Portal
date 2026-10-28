@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Issues | FixIt</title>
+    <meta name="description" content="View and track your reported campus issues.">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<div class="container">
+
+    <header class="header">
+        <a href="/" class="logo" style="text-decoration: none;">✦ FixIt</a>
+
+        <nav class="nav" aria-label="Main navigation">
+            <a href="/">Home</a>
+            <a href="/report">Report Issue</a>
+            <a href="/my-issues" aria-current="page">My Issues</a>
+            <a href="/staff-dashboard">Staff Dashboard</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <p style="color: #2563eb; font-weight: 700; margin-bottom: 12px;">
+                ✦ YOUR COMPLAINTS
+            </p>
+
+            <h1>My Issues</h1>
+
+            <p>
+                Keep track of your reported problems and follow their
+                progress toward resolution.
+            </p>
+
+            <a href="/report" class="btn">＋ Report New Issue</a>
+        </section>
+
+        <section style="margin-top: 36px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;">
+                <div>
+                    <h2 style="font-size: 24px; color: #172033;">
+                        Your submissions
+                    </h2>
+                    <p style="color: #64748b; margin-top: 4px;">
+                        Select an issue to see its details.
+                    </p>
+                </div>
+
+                <span style="background: #e7efff; color: #1d4ed8; padding: 8px 14px; border-radius: 20px; font-size: 14px; font-weight: 700;">
+                    {{ complaints|length }} issue{{ '' if complaints|length == 1 else 's' }}
+                </span>
+            </div>
+
+            {% if complaints %}
+
+                <div class="features">
+                    {% for complaint in complaints %}
+
+                        <article class="feature-card"
+                                 style="display: flex; flex-direction: column; gap: 14px;">
+
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap;">
+                                <div>
+                                    <p style="font-size: 12px; color: #64748b; font-weight: 700; letter-spacing: .5px;">
+                                        ISSUE #{{ complaint.id }}
+                                    </p>
+
+                                    <h3 style="margin-top: 5px;">
+                                        {{ complaint.category }}
+                                    </h3>
+                                </div>
+
+                                <span class="status-badge status-{{ complaint.status|lower|replace(' ', '-') }}"
+                                      style="margin-left: 0;">
+                                    {{ complaint.status }}
+                                </span>
+                            </div>
+
+                            <div style="background: #f8faff; padding: 14px; border-radius: 12px;">
+                                <p style="font-size: 13px; color: #64748b; margin-bottom: 4px;">
+                                    📍 LOCATION
+                                </p>
+                                <p style="font-weight: 600; overflow-wrap: anywhere;">
+                                    {{ complaint.location }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p style="font-size: 13px; color: #64748b; margin-bottom: 4px;">
+                                    ISSUE DESCRIPTION
+                                </p>
+
+                                <p style="line-height: 1.7; overflow-wrap: anywhere;">
+                                    {% if complaint.description|length > 160 %}
+                                        {{ complaint.description[:160] }}…
+                                    {% else %}
+                                        {{ complaint.description }}
+                                    {% endif %}
+                                </p>
+                            </div>
+
+                            <div style="border-top: 1px solid #e5eaf2; padding-top: 14px; margin-top: auto;">
+                                <p style="font-size: 13px; color: #64748b; margin-bottom: 14px;">
+                                    🕒 Reported: {{ complaint.created_at }}
+                                </p>
+
+                                <a href="{{ url_for('issue_detail', issue_id=complaint.id) }}"
+                                   class="btn"
+                                   style="text-align: center; width: 100%;">
+                                    View Issue Details →
+                                </a>
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+                </div>
+
+            {% else %}
+
+                <section class="feature-card"
+                         style="text-align: center; padding: 48px 24px;">
+
+                    <div style="font-size: 42px; margin-bottom: 16px;">
+                        📋
+                    </div>
+
+                    <h2>No issues reported yet</h2>
+
+                    <p style="color: #64748b; margin: 12px 0 24px;">
+                        When you submit a campus complaint, it will appear here.
+                    </p>
+
+                    <a href="/report" class="btn">
+                        Report Your First Issue →
+                    </a>
+                </section>
+
+            {% endif %}
+        </section>
+    </main>
+
+    <footer style="text-align: center; color: #64748b; font-size: 13px; padding: 32px 0 10px;">
+        FixIt · Every issue deserves attention.
+    </footer>
+
+</div>
+</body>
+</html>
