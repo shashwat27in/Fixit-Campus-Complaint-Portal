@@ -1,29 +1,45 @@
-FIXIT PROJECT — CURRENT PROGRESS
+# FIXIT PROJECT — CURRENT PROGRESS
 
-Stack:
-HTML + CSS + JavaScript + Python Flask + MySQL
+## Stack
+HTML + CSS + JavaScript + Python Flask + SQLAlchemy + PyMySQL + TiDB Cloud (MySQL-compatible database)
 
-Completed:
-✓ VS Code setup
-✓ Python installed
-✓ Virtual environment created
-✓ Flask installed
-✓ Flask server working
-✓ FixIt homepage
-✓ Report Issue page
-✓ CSS design
-✓ JavaScript validation
-✓ Flask POST route
-✓ Form connected to Flask
-✓ MySQL 8.0.46 installed
-✓ MySQL Workbench installed/configured
+## Completed
+✓ VS Code and Python setup  
+✓ Virtual environment and Flask installation  
+✓ FixIt homepage and navigation  
+✓ Report Issue page  
+✓ CSS design and JavaScript validation  
+✓ Flask routes and form integration  
+✓ MySQL database structure and models  
+✓ Database connection migrated to TiDB Cloud  
+✓ Complaint reporting and storage  
+✓ My Issues page  
+✓ Complaint detail page  
+✓ Staff login and session  
+✓ Staff dashboard  
+✓ Complaint status updates  
+✓ Dashboard summary cards and pie chart  
+✓ GitHub repository created and code pushed  
+✓ Render deployment completed  
+✓ Live website tested  
+✓ Final CSE326 PowerPoint prepared  
 
-CURRENT POINT:
-MySQL is installed and configured.
-Next: Create the FixIt database and connect Flask to MySQL.
+## Important Links
 
-PROJECT LOCATION:
+Live Website: https://fixit-campus-complaint-portal.onrender.com/
+
+GitHub: https://github.com/shashwat27in/Fixit-Campus-Complaint-Portal
+
+## Remaining Tasks
+1. Final website smoke test.
+2. Verify PowerPoint team names and IDs.
+3. Confirm video presentation is ready.
+4. Prepare for project viva.
+5. Complete final LMS submission.
+
+## Project Location
 C:\Users\shashwat\OneDrive\Desktop\fixit
 
-IMPORTANT:
-Continue step-by-step, one action at a time.
+## Current Status
+Development and deployment completed.  
+Final verification, documentation, viva preparation and submission remain.
